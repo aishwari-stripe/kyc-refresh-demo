@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Verification - KYC Refresh</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Left Navigation Bar -->
+        <div class="left-nav" id="left-nav">
+            <div class="nav-items">
+                <div class="nav-item active" onclick="showEmailTab()" id="email-tab">
+                    <span class="nav-icon">📧</span>
+                    <span class="nav-text">Email</span>
+                </div>
+                <div class="nav-item" onclick="showDashboardTab()" id="dashboard-tab">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </div>
+                <div class="nav-item" onclick="showKYCTab()" id="kyc-tab">
+                    <span class="nav-icon">🔐</span>
+                    <span class="nav-text">KYC Experience</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Container for Screens -->
+        <div class="main-container">
+            <!-- Email Entry Screen -->
+            <div class="email-entry-screen" id="email-entry-screen">
+                <div class="email-container">
+                    <!-- Header -->
+                    <div class="email-header">
+                        <div class="stripe-text">stripe</div>
+                        <div class="email-date">Mar 8, 2025, 11:02 AM (4 days ago)</div>
+                    </div>
+
+                    <!-- Email Content -->
+                    <div class="email-content">
+                        <!-- Gradient Banner -->
+                        <div class="gradient-banner"></div>
+
+                        <!-- Main Content -->
+                        <div class="email-main-content">
+                            <h1 class="email-title">It's been a great year—let's keep going</h1>
+                            <p class="email-subtitle">Before we jump into another successful year, we want to show you how far you've come and make sure you're ready for what's next.</p>
+                            
+                            <div class="email-sections">
+                                <div class="email-info-section">
+                                    <h3>View your year-in-review</h3>
+                                    <p>Celebrate your achievements with a personalized look at your 2024 growth, including payment volume, customer expansion, and market reach. See how far you've come!</p>
+                                </div>
+
+                                <div class="email-info-section">
+                                    <h3>Keep your information current</h3>
+                                    <p>Quick updates to your business details help us provide better support and ensure smooth operations. It takes just a minute to review and confirm your information.</p>
+                                </div>
+
+                                <div class="email-info-section">
+                                    <h3>Get a head start on the next year</h3>
+                                    <p>Share your 2025 goals with us so we can proactively support your growth plans. Whether it's expanding globally or launching new products, we're here to help.</p>
+                                </div>
+                            </div>
+
+                            <div class="email-cta-section">
+                                <button class="email-cta-btn" onclick="showDashboardTab()">Get started</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Screen -->
+            <div class="dashboard-screen hidden" id="dashboard-screen">
+                <div class="dashboard-image-container">
+                    <!-- Replace 'dashboard-screenshot.png' with your actual dashboard image -->
+                    <img src="dashboard-screenshot.png" alt="Stripe Dashboard" class="dashboard-image" />
+                </div>
+                
+                <!-- Modal Overlay -->
+                <div class="modal-overlay"></div>
+                
+                <!-- Modal -->
+                <div class="dashboard-modal">
+                    <div class="modal-header">
+                        <button class="modal-close-btn" onclick="closeDashboardModal()">×</button>
+                    </div>
+                    <div class="modal-content">
+                        <h1 class="modal-title">It's been a great year—let's keep going</h1>
+                        <p class="modal-subtitle">Before we jump into another successful year, we want to show you how far you've come and make sure you're ready for what's next.</p>
+                        
+                        <div class="modal-steps">
+                            <div class="step-item">
+                                <div class="step-content">
+                                    <h3>View your year-in-review</h3>
+                                    <p>Celebrate your achievements with a personalized look at your 2024 growth, including payment volume, customer expansion, and market reach. See how far you've come!</p>
+                                </div>
+                            </div>
+
+                            <div class="step-item">
+                                <div class="step-content">
+                                    <h3>Keep your information current</h3>
+                                    <p>Quick updates to your business details help us provide better support and ensure smooth operations. It takes just a minute to review and confirm your information.</p>
+                                </div>
+                            </div>
+
+                            <div class="step-item">
+                                <div class="step-content">
+                                    <h3>Get a head start on the next year</h3>
+                                    <p>Share your 2025 goals with us so we can proactively support your growth plans. Whether it's expanding globally or launching new products, we're here to help.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button class="modal-btn secondary" onclick="closeDashboardModal()">Skip for now</button>
+                        <button class="modal-btn primary" onclick="startKYCFlow()">Get started</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KYC Flow Container -->
+            <div class="kyc-flow-container hidden" id="kyc-flow-container">
+                <!-- Progress Header -->
+                <div class="progress-header" id="progress-header">
+                    <div class="progress-container">
+                        <div class="progress-label">Account Verification Progress</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Step 1 of 5</div>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="main-content" id="main-content">
+            <!-- Left Side - Content -->
+            <div class="content-side">
+                <!-- Page 1: Year in Review -->
+                <div class="page" id="page-get-started" data-page="1">
+                    <div class="page-header">
+                        <h1>Your year in review</h1>
+                        <p class="subtitle">2025 with Stripe, your stories in a nutshell</p>
+                    </div>
+                    
+                    <div class="page-content">
+                        <div class="what-to-expect">
+                            <h3>What to expect:</h3>
+                            <ul>
+                                <li>Review your representative information</li>
+                                <li>Confirm business ownership details</li>
+                                <li>Update your business profile</li>
+                                <li>Get back to running your business</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 2: Representative Information -->
+                <div class="page hidden" id="page-representative" data-page="2">
+                    <div class="page-header">
+                        <h1>Your representative information</h1>
+                        <p class="subtitle">Please review and confirm the representative details we have on file.</p>
+                        <div class="last-updated amber">Last updated: 8 months ago</div>
+                    </div>
+                    
+                    <div class="page-content">
+                        <div class="field-group">
+                            <div class="field-item">
+                                <label>Representative name</label>
+                                <div class="field-display" id="rep-name-display">
+                                    <span class="field-value">Jane Doe</span>
+                                    <button class="change-btn" onclick="editField('rep-name')">Change</button>
+                                </div>
+                                <div class="field-edit hidden" id="rep-name-edit">
+                                    <input type="text" value="Jane Doe" class="field-input">
+                                    <div class="edit-actions">
+                                        <button class="save-btn" onclick="saveField('rep-name')">Save</button>
+                                        <button class="cancel-btn" onclick="cancelEdit('rep-name')">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field-item">
+                                <label>Representative address</label>
+                                <div class="field-display" id="rep-address-display">
+                                    <span class="field-value">123 Main St, Suite 100<br>New York, NY 10001</span>
+                                    <button class="change-btn" onclick="editField('rep-address')">Change</button>
+                                </div>
+                                <div class="field-edit hidden" id="rep-address-edit">
+                                    <textarea class="field-input" rows="3">123 Main St, Suite 100
+New York, NY 10001</textarea>
+                                    <div class="edit-actions">
+                                        <button class="save-btn" onclick="saveField('rep-address')">Save</button>
+                                        <button class="cancel-btn" onclick="cancelEdit('rep-address')">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field-item">
+                                <label>Representative phone</label>
+                                <div class="field-display" id="rep-phone-display">
+                                    <span class="field-value">(555) 123-4567</span>
+                                    <button class="change-btn" onclick="editField('rep-phone')">Change</button>
+                                </div>
+                                <div class="field-edit hidden" id="rep-phone-edit">
+                                    <input type="tel" value="(555) 123-4567" class="field-input">
+                                    <div class="edit-actions">
+                                        <button class="save-btn" onclick="saveField('rep-phone')">Save</button>
+                                        <button class="cancel-btn" onclick="cancelEdit('rep-phone')">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field-item">
+                                <label>Representative email</label>
+                                <div class="field-display" id="rep-email-display">
+                                    <span class="field-value">jane.doe@example.com</span>
+                                    <button class="change-btn" onclick="editField('rep-email')">Change</button>
+                                </div>
+                                <div class="field-edit hidden" id="rep-email-edit">
+                                    <input type="email" value="jane.doe@example.com" class="field-input">
+                                    <div class="edit-actions">
+                                        <button class="save-btn" onclick="saveField('rep-email')">Save</button>
+                                        <button class="cancel-btn" onclick="cancelEdit('rep-email')">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 3: Ownership Details -->
+                <div class="page hidden" id="page-ownership" data-page="3">
+                    <div class="page-header">
+                        <h1>Business owners & structure</h1>
+                        <p class="subtitle">Please confirm the ownership details for your business.</p>
+                        <div class="last-updated red">Last updated: 2 years ago</div>
+                        <div class="help-tooltip-text">
+                            <span class="info-icon">ℹ️</span>
+                            Verifying who owns and controls the business is a key regulatory step that protects your account from fraud.
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        <div class="field-group">
+                            <div class="field-item">
+                                <label>Legal owners</label>
+                                <div class="field-display" id="owners-display">
+                                    <span class="field-value">Jane Doe (CEO, 75%)<br>John Smith (CTO, 25%)</span>
+                                    <button class="change-btn" onclick="editField('owners')">Change</button>
+                                </div>
+                                <div class="field-edit hidden" id="owners-edit">
+                                    <textarea class="field-input" rows="3">Jane Doe (CEO, 75%)
+John Smith (CTO, 25%)</textarea>
+                                    <div class="edit-actions">
+                                        <button class="save-btn" onclick="saveField('owners')">Save</button>
+                                        <button class="cancel-btn" onclick="cancelEdit('owners')">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field-item">
+                                <label>Owner address(es)</label>
+                                <div class="field-display" id="owner-addresses-display">
+                                    <span class="field-value">Jane Doe: 123 Main St, Suite 100, New York, NY 10001<br>John Smith: 456 Oak Ave, Brooklyn, NY 11201</span>
+                                    <button class="change-btn" onclick="editField('owner-addresses')">Change</button>
+                                </div>
+                                <div class="field-edit hidden" id="owner-addresses-edit">
+                                    <textarea class="field-input" rows="4">Jane Doe: 123 Main St, Suite 100, New York, NY 10001
+John Smith: 456 Oak Ave, Brooklyn, NY 11201</textarea>
+                                    <div class="edit-actions">
+                                        <button class="save-btn" onclick="saveField('owner-addresses')">Save</button>
+                                        <button class="cancel-btn" onclick="cancelEdit('owner-addresses')">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field-item">
+                                <label>Owner identification</label>
+                                <div class="field-display" id="owner-docs-display">
+                                    <span class="field-value">Driver's License and SSN on file for both owners</span>
+                                    <button class="change-btn" onclick="showDocumentModal()">View/Update Documents</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 4: Business Profile -->
+                <div class="page hidden" id="page-business" data-page="4">
+                    <div class="page-header">
+                        <h1>Your business profile</h1>
+                        <p class="subtitle">Please review and update your business information.</p>
+                        <div class="last-updated green">Last updated: 3 months ago</div>
+                    </div>
+                    
+                    <div class="page-content">
+                        <div class="field-group">
+                            <div class="field-item">
+                                <label>Legal company name</label>
+                                <div class="field-display" id="company-name-display">
+                                    <span class="field-value">Example Inc.</span>
+                                    <button class="change-btn" onclick="editField('company-name')">Change</button>
+                                </div>
+                                <div class="field-edit hidden" id="company-name-edit">
+                                    <input type="text" value="Example Inc." class="field-input">
+                                    <div class="edit-actions">
+                                        <button class="save-btn" onclick="saveField('company-name')">Save</button>
+                                        <button class="cancel-btn" onclick="cancelEdit('company-name')">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field-item">
+                                <label>Company tax ID</label>
+                                <div class="field-display" id="tax-id-display">
+                                    <span class="field-value">•••-••-1234</span>
+                                    <button class="change-btn" onclick="editField('tax-id')">Change</button>
+                                </div>
+                                <div class="field-edit hidden" id="tax-id-edit">
+                                    <input type="text" value="123-45-1234" class="field-input">
+                                    <div class="edit-actions">
+                                        <button class="save-btn" onclick="saveField('tax-id')">Save</button>
+                                        <button class="cancel-btn" onclick="cancelEdit('tax-id')">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field-item">
+                                <label>Company address</label>
+                                <div class="field-display" id="company-address-display">
+                                    <span class="field-value">456 Corporate Blvd, Suite 200<br>San Francisco, CA 94102</span>
+                                    <button class="change-btn" onclick="editField('company-address')">Change</button>
+                                </div>
+                                <div class="field-edit hidden" id="company-address-edit">
+                                    <textarea class="field-input" rows="3">456 Corporate Blvd, Suite 200
+San Francisco, CA 94102</textarea>
+                                    <div class="edit-actions">
+                                        <button class="save-btn" onclick="saveField('company-address')">Save</button>
+                                        <button class="cancel-btn" onclick="cancelEdit('company-address')">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field-item">
+                                <label>Industry</label>
+                                <div class="field-display" id="industry-display">
+                                    <span class="field-value">E-commerce Software</span>
+                                    <button class="change-btn" onclick="editField('industry')">Change</button>
+                                </div>
+                                <div class="field-edit hidden" id="industry-edit">
+                                    <input type="text" value="E-commerce Software" class="field-input">
+                                    <div class="edit-actions">
+                                        <button class="save-btn" onclick="saveField('industry')">Save</button>
+                                        <button class="cancel-btn" onclick="cancelEdit('industry')">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field-item">
+                                <label>Website URL</label>
+                                <div class="field-display" id="website-display">
+                                    <span class="field-value">https://www.example.com</span>
+                                    <button class="change-btn" onclick="editField('website')">Change</button>
+                                </div>
+                                <div class="field-edit hidden" id="website-edit">
+                                    <input type="url" value="https://www.example.com" class="field-input">
+                                    <div class="edit-actions">
+                                        <button class="save-btn" onclick="saveField('website')">Save</button>
+                                        <button class="cancel-btn" onclick="cancelEdit('website')">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field-item">
+                                <label>Product description</label>
+                                <div class="field-display" id="product-display">
+                                    <span class="field-value">A comprehensive e-commerce platform that helps businesses manage their online stores, process payments, and track inventory.</span>
+                                    <button class="change-btn" onclick="editField('product')">Change</button>
+                                </div>
+                                <div class="field-edit hidden" id="product-edit">
+                                    <textarea class="field-input" rows="3">A comprehensive e-commerce platform that helps businesses manage their online stores, process payments, and track inventory.</textarea>
+                                    <div class="edit-actions">
+                                        <button class="save-btn" onclick="saveField('product')">Save</button>
+                                        <button class="cancel-btn" onclick="cancelEdit('product')">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 5: Next Steps -->
+                <div class="page hidden" id="page-next-steps" data-page="5">
+                    <div class="page-header">
+                        <h1>Verification complete!</h1>
+                        <p class="subtitle">Thank you for keeping your account information up to date. Your business is now fully verified and secure.</p>
+                    </div>
+                    
+                    <div class="page-content">
+                        <div class="completion-summary">
+                            <div class="benefits-list">
+                                <div class="benefit-item">
+                                    <span class="checkmark">✓</span>
+                                    <div>
+                                        <h4>Uninterrupted payouts</h4>
+                                        <p>Your payments will continue flowing smoothly without any disruptions.</p>
+                                    </div>
+                                </div>
+                                <div class="benefit-item">
+                                    <span class="checkmark">✓</span>
+                                    <div>
+                                        <h4>Enhanced account security</h4>
+                                        <p>Your account is now protected with the latest security measures.</p>
+                                    </div>
+                                </div>
+                                <div class="benefit-item">
+                                    <span class="checkmark">✓</span>
+                                    <div>
+                                        <h4>Full regulatory compliance</h4>
+                                        <p>Your business meets all regulatory requirements for smooth operations.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Visual Area -->
+            <div class="visual-side">
+                <div class="flip-cards-container">
+                    <!-- Card 1: Peak Transaction Periods -->
+                    <div class="flip-card" onclick="flipCard(this)">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="card-icon">📊</div>
+                                <h3>Your peak transaction periods</h3>
+                                <p>Your single busiest week was <strong>Nov 26–Dec 2</strong>, generating a 25% increase in average daily revenue.</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="card-icon">💰</div>
+                                <h3>Peak Revenue Details</h3>
+                                <div class="stats">
+                                    <div class="stat-item">
+                                        <span class="stat-number">$125,000</span>
+                                        <span class="stat-label">Total Revenue</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-number">+25%</span>
+                                        <span class="stat-label">vs Previous Week</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-number">1,847</span>
+                                        <span class="stat-label">Transactions</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Biggest Mic Drop Moment -->
+                    <div class="flip-card" onclick="flipCard(this)">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="card-icon">🎤</div>
+                                <h3>The biggest mic drop moment</h3>
+                                <p>On March 23rd, you broke your personal record with a single <strong>$5000</strong> transaction!</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="card-icon">🏆</div>
+                                <h3>Record Breaking</h3>
+                                <div class="stats">
+                                    <div class="stat-item">
+                                        <span class="stat-number">$5,000</span>
+                                        <span class="stat-label">Largest Transaction</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-number">March 23rd</span>
+                                        <span class="stat-label">Date Achieved</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-number">3.2x</span>
+                                        <span class="stat-label">Previous Record</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Global Expansion -->
+                    <div class="flip-card" onclick="flipCard(this)">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="card-icon">🌍</div>
+                                <h3>You are global this year</h3>
+                                <p>This year, you rocked in 10 new countries. Canada was your breakout market with an <strong>85% revenue jump!</strong></p>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="card-icon">🚀</div>
+                                <h3>Global Growth</h3>
+                                <div class="stats">
+                                    <div class="stat-item">
+                                        <span class="stat-number">10</span>
+                                        <span class="stat-label">New Countries</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-number">+85%</span>
+                                        <span class="stat-label">Canada Revenue</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-number">23</span>
+                                        <span class="stat-label">Total Markets</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                <!-- Navigation -->
+                <div class="navigation" id="navigation">
+                    <button class="nav-btn secondary" id="backBtn" onclick="previousPage()" disabled>
+                        ← Back
+                    </button>
+                    <button class="nav-btn primary" id="nextBtn" onclick="nextPage()">
+                        Get Started →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
